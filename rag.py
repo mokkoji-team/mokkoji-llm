@@ -8,6 +8,8 @@ from llama_index.llms.ollama import Ollama
 
 OLLAMA_URL = "http://localhost:11434"
 DATA_DIR = Path(__file__).parent / "data"
+Settings.chunk_size = 512
+Settings.chunk_overlap = 50
 
 
 def build_query_engine():
@@ -18,7 +20,7 @@ def build_query_engine():
     Settings.llm = Ollama(
         model="llama3.1:8b",
         base_url=OLLAMA_URL,
-        request_timeout=120.0,
+        request_timeout=300.0,
         context_window=4096,
         system_prompt=(
             "너는 한국어로 답하는 회의록 도우미다. "
@@ -37,7 +39,7 @@ def build_query_engine():
 
     index = VectorStoreIndex.from_documents(documents)
     return index.as_query_engine(
-        similarity_top_k=3,
+        similarity_top_k=2,
         node_postprocessors=[SimilarityPostprocessor(similarity_cutoff=0.5)],
     )
 
