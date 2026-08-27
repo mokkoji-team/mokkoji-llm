@@ -19,6 +19,7 @@ def build_query_engine():
         model="llama3.1:8b",
         base_url=OLLAMA_URL,
         request_timeout=120.0,
+        context_window=4096,
         system_prompt=(
             "너는 한국어로 답하는 회의록 도우미다. "
             "주어진 문맥만 근거로 답하고, 근거가 없으면 "

@@ -1,9 +1,12 @@
+import logging
+
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
 from rag import ask
 
 
+logger = logging.getLogger(__name__)
 app = FastAPI(title="Mokkoji LLM API")
 
 
@@ -31,4 +34,5 @@ def ask_question(request: AskRequest) -> dict:
     try:
         return ask(request.question)
     except Exception as exc:
+        logger.exception("LLM response generation failed")
         raise HTTPException(status_code=503, detail="LLM 응답 생성에 실패했습니다.") from exc
