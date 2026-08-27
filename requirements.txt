@@ -1,4 +1,6 @@
 fastapi
+itsdangerous
+python-multipart
 uvicorn[standard]
 llama-index-core
 llama-index-llms-ollama

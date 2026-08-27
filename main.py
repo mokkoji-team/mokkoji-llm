@@ -1,13 +1,24 @@
 import logging
 
-from fastapi import FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException
 from pydantic import BaseModel, Field
+from starlette.middleware.sessions import SessionMiddleware
 
+from auth import get_session_secret, require_auth, router as auth_router
 from rag import ask
 
 
 logger = logging.getLogger(__name__)
 app = FastAPI(title="Mokkoji LLM API")
+app.add_middleware(
+    SessionMiddleware,
+    secret_key=get_session_secret(),
+    session_cookie="mokkoji_session",
+    max_age=60 * 60 * 12,
+    same_site="lax",
+    https_only=True,
+)
+app.include_router(auth_router)
 
 
 class AskRequest(BaseModel):
@@ -29,7 +40,7 @@ def health() -> dict[str, str]:
     return {"status": "ok"}
 
 
-@app.post("/ask", response_model=AskResponse)
+@app.post("/ask", response_model=AskResponse, dependencies=[Depends(require_auth)])
 def ask_question(request: AskRequest) -> dict:
     try:
         return ask(request.question)
