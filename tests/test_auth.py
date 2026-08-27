@@ -1,28 +1,16 @@
-import hashlib
-
 from fastapi import Depends, FastAPI
 from fastapi.testclient import TestClient
 from starlette.middleware.sessions import SessionMiddleware
 
-from auth import require_auth, router
-
-
-def password_hash(password: str) -> str:
-    salt = bytes.fromhex("00112233445566778899aabbccddeeff")
-    digest = hashlib.scrypt(
-        password.encode("utf-8"),
-        salt=salt,
-        n=2**14,
-        r=8,
-        p=1,
-        dklen=32,
-    ).hex()
-    return f"{salt.hex()}:{digest}"
+from auth import hash_password, require_auth, router
 
 
 def create_client(monkeypatch) -> TestClient:
     monkeypatch.setenv("MOKKOJI_AUTH_USERNAME", "mokkoji")
-    monkeypatch.setenv("MOKKOJI_AUTH_PASSWORD_HASH", password_hash("correct-password"))
+    salt = bytes.fromhex("00112233445566778899aabbccddeeff")
+    monkeypatch.setenv(
+        "MOKKOJI_AUTH_PASSWORD_HASH", hash_password("correct-password", salt)
+    )
 
     app = FastAPI()
     app.add_middleware(SessionMiddleware, secret_key="test-secret", https_only=True)

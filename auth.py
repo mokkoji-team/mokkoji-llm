@@ -30,6 +30,19 @@ LOGIN_PAGE = """<!doctype html>
 """
 
 
+def hash_password(password: str, salt: bytes | None = None) -> str:
+    salt = salt or secrets.token_bytes(16)
+    digest = hashlib.scrypt(
+        password.encode("utf-8"),
+        salt=salt,
+        n=2**14,
+        r=8,
+        p=1,
+        dklen=32,
+    ).hex()
+    return f"{salt.hex()}:{digest}"
+
+
 def get_session_secret() -> str:
     secret = os.getenv("MOKKOJI_SESSION_SECRET")
     if not secret:
@@ -47,14 +60,7 @@ def verify_credentials(username: str, password: str) -> bool:
     except ValueError:
         return False
 
-    actual_hash = hashlib.scrypt(
-        password.encode("utf-8"),
-        salt=salt,
-        n=2**14,
-        r=8,
-        p=1,
-        dklen=32,
-    ).hex()
+    actual_hash = hash_password(password, salt).split(":", maxsplit=1)[1]
     return secrets.compare_digest(username, expected_username) and secrets.compare_digest(
         actual_hash, expected_hash
     )
