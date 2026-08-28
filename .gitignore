@@ -3,3 +3,5 @@ venv.broken/
 __pycache__/
 *.pyc
 .env
+data/notion/
+storage/
