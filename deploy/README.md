@@ -87,3 +87,14 @@ Application logs:
 sudo journalctl -u mokkoji-llm -n 100 --no-pager
 sudo journalctl -u caddy -n 100 --no-pager
 ```
+# Notion 회의록 동기화
+
+`mokkoji-notion-sync.service`는 `/etc/mokkoji-llm.env`의 Notion 연결정보를
+읽어 회의록 원문을 `data/notion/`에 한 번 동기화하는 oneshot 서비스다.
+
+```bash
+sudo cp deploy/mokkoji-notion-sync.service /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl start mokkoji-notion-sync
+sudo journalctl -u mokkoji-notion-sync -n 50 --no-pager
+```

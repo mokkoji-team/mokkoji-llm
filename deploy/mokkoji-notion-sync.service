@@ -1,0 +1,13 @@
+[Unit]
+Description=Sync Mokkoji meeting notes from Notion
+After=network-online.target ollama.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/mokkoji-llm
+EnvironmentFile=/etc/mokkoji-llm.env
+ExecStart=/home/ubuntu/mokkoji-llm/venv/bin/python /home/ubuntu/mokkoji-llm/notion_sync.py
+
