@@ -1,0 +1,12 @@
+[Unit]
+Description=Build Mokkoji LLM persistent RAG index
+After=ollama.service mokkoji-notion-sync.service
+Requires=ollama.service
+
+[Service]
+Type=oneshot
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/mokkoji-llm
+ExecStart=/home/ubuntu/mokkoji-llm/venv/bin/python /home/ubuntu/mokkoji-llm/rebuild_index.py
+

@@ -98,3 +98,15 @@ sudo systemctl daemon-reload
 sudo systemctl start mokkoji-notion-sync
 sudo journalctl -u mokkoji-notion-sync -n 50 --no-pager
 ```
+
+# RAG 인덱스 생성
+
+`mokkoji-index.service`는 `data/`의 원문을 임베딩하고, 완성된 새 인덱스만
+`storage/`로 교체하는 oneshot 서비스다.
+
+```bash
+sudo cp deploy/mokkoji-index.service /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl start mokkoji-index
+sudo journalctl -u mokkoji-index -n 50 --no-pager
+```
