@@ -8,6 +8,28 @@ Internet (80/443) -> Caddy -> FastAPI (127.0.0.1:8000) -> Ollama (127.0.0.1:1143
 
 Only ports 80 and 443 are public. FastAPI and Ollama remain bound to localhost.
 
+## Shared account authentication
+
+Create or replace the shared account configuration on the server:
+
+```bash
+sudo venv/bin/python scripts/configure_auth.py
+sudo ls -l /etc/mokkoji-llm.env
+```
+
+The environment file must be owned by root with mode `600`. It contains the
+username, a one-way password hash, and a random session signing secret. It must
+never be committed to Git.
+
+Apply changed credentials by restarting the application:
+
+```bash
+sudo systemctl restart mokkoji-llm
+```
+
+The health endpoint stays public for monitoring. `/ask` requires a signed HTTPS
+session created at `https://llm.mokkoji.site/login`.
+
 ## FastAPI service
 
 ```bash
