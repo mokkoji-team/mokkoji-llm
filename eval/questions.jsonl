@@ -1,0 +1,2 @@
+{"id":"F01","category":"fact","question":"동아리장이 되려는 사용자가 카카오로 최초 가입하면 처음 role은 뭐야?","expected_sources":["5차 회의록"],"expected_answer_points":["NORMAL"],"should_abstain":false}
+{"id":"F02","category":"fact","question":"동아리장 권한 신청이 승인되면 사용자의 role은 어떻게 바뀌어?","expected_sources":["5차 회의록"],"expected_answer_points":["CLUB_MASTER"],"should_abstain":false}
