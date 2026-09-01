@@ -7,12 +7,12 @@ import json
 import os
 import re
 import sys
+import time
 import urllib.error
 import urllib.request
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Iterable
-
 
 API_URL = "https://api.notion.com/v1"
 DEFAULT_VERSION = "2026-03-11"
@@ -47,19 +47,45 @@ class NotionClient:
         self, method: str, path: str, payload: dict[str, Any] | None = None
     ) -> dict[str, Any]:
         body = json.dumps(payload).encode("utf-8") if payload is not None else None
-        request = urllib.request.Request(
-            f"{API_URL}{path}", data=body, headers=self.headers, method=method
-        )
-        try:
-            with urllib.request.urlopen(request, timeout=30) as response:
-                return json.load(response)
-        except urllib.error.HTTPError as error:
-            detail = error.read().decode("utf-8", errors="replace")
-            raise NotionAPIError(
-                f"Notion API 요청 실패 ({error.code} {path}): {detail}"
-            ) from error
-        except urllib.error.URLError as error:
-            raise NotionAPIError(f"Notion API 연결 실패 ({path}): {error.reason}") from error
+        for attempt in range(5):
+            request = urllib.request.Request(
+                f"{API_URL}{path}",
+                data=body,
+                headers=self.headers,
+                method=method,
+            )
+
+            try:
+                with urllib.request.urlopen(request, timeout=30) as response:
+                    return json.load(response)
+
+            except urllib.error.HTTPError as error:
+                detail = error.read().decode("utf-8", errors="replace")
+
+                if error.code == 429:
+                    retry_after = int(error.headers.get("Retry-After", "5"))
+
+                    if attempt == 4:
+                        raise NotionAPIError(
+                            f"Notion API 재시도 횟수 초과 (429 {path}): {detail}"
+                        ) from error
+
+                    print(
+                        f"Notion API rate limit: {retry_after}초 후 재시도 "
+                        f"({attempt + 1}/5)"
+                    )
+
+                    time.sleep(retry_after)
+                    continue
+
+                raise NotionAPIError(
+                    f"Notion API 요청 실패 ({error.code} {path}): {detail}"
+                ) from error
+
+            except urllib.error.URLError as error:
+                raise NotionAPIError(
+                    f"Notion API 연결 실패 ({path}): {error.reason}"
+                ) from error
 
     def paginated(
         self, method: str, path: str, payload: dict[str, Any] | None = None
