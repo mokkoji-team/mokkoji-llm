@@ -1,0 +1,37 @@
+{"question": "이미지 삭제를 프론트가 아니라 서버에서 하기로 한 근거가 뭐야?", "answer_page_ids": ["39d7455c17d0804e9a17cf54626ba23c"]}
+{"question": "로고 이미지 줄일 때 최대 몇 픽셀로 잡았지?", "answer_page_ids": ["3b47455c17d08016a652c58b73f3fbc8"]}
+{"question": "CI는 성공했는데 개발 서버에서 데이터가 안 왔던 적 있잖아, 원인이 뭐였어?", "answer_page_ids": ["3a67455c17d08026a184c2eefba76ca1"]}
+{"question": "12월에 AWS 요금 갑자기 튄 이유가 뭐였어?", "answer_page_ids": ["3007455c17d0800cba13fa594727e9c8"]}
+{"question": "ddl-auto update 쓰다가 왜 바꾼 거야?", "answer_page_ids": ["3a27455c17d080f5834fc0166a6248bf"]}
+{"question": "8080 포트를 전체 공개에서 막은 이유가 뭐지?", "answer_page_ids": ["3007455c17d0802eadd8c4bbba0efb8b"]}
+{"question": "토큰 에러 로그 남기다가 서버 내려간 적 있지 않아?", "answer_page_ids": ["2f27455c17d08011b5c5d7d73bc184ab"]}
+{"question": "어드민에서 뒤로가기 누르면 페이지가 통째로 나가버리던 거 어떻게 고쳤어?", "answer_page_ids": ["3247455c17d0805caea8ed883d4eeefc"]}
+{"question": "운영 서버 보안그룹이 몇 개고 각각 뭐 하는 거야?", "answer_page_ids": ["3797455c17d080b3839de41ce4a35e50"]}
+{"question": "모니터링을 dev랑 prod에서 다르게 구성한 이유가 뭐야?", "answer_page_ids": ["39d7455c17d080fba5a9e063e342185e"]}
+{"question": "운영 쪽 사진을 개발 쪽으로 복사하는 절차 정리된 거 있어?", "answer_page_ids": ["3007455c17d080ada4cdcff3e4ee7617"]}
+{"question": "카카오 로그인 붙일 때 앱 키를 어디서 받는 거였지?", "answer_page_ids": ["3007455c17d080c685f9fc878c0e77c0"]}
+{"question": "프리티어 끝나서 인스턴스가 종료됐던 적이 언제야?", "answer_page_ids": ["3007455c17d080e5a85ce589f94845a3", "3007455c17d0800cba13fa594727e9c8"]}
+{"question": "테일윈드도 후보에 있었는데 왜 안 썼어?", "answer_page_ids": ["1987455c17d08004bb24dce1cca8ee2e"]}
+{"question": "우리 서비스 어느 브라우저 기준으로 만든 거야?", "answer_page_ids": ["1987455c17d0807a945ac38204bf9613"]}
+{"question": "프론트 캐싱 기술은 뭘로 하기로 했지?", "answer_page_ids": ["1987455c17d080658d8bd48e67f80f8f"]}
+{"question": "백엔드 작업 브랜치는 어디에 먼저 머지해야 돼?", "answer_page_ids": ["29a7455c17d0813fbab4feced6a0d021", "29b7455c17d081deaf8cfb09c00afe0d"]}
+{"question": "QueryDSL이 만드는 Q클래스는 어느 폴더에 생겨?", "answer_page_ids": ["29a7455c17d081d4a6dbe59f6cc104ba"]}
+{"question": "프론트 fsd구조에서 widgets랑 views 차이가 뭐야?", "answer_page_ids": ["2b77455c17d08130bae7d9b2a66d205d"]}
+{"question": "서버 쪽 커밋 메시지 앞에 붙이는 타입 종류가 뭐뭐 있어?", "answer_page_ids": ["1927455c17d0818c8effcfbd20a0eb1b", "29a7455c17d081688d70d17e86124b41", "29b7455c17d0818c88c0daec1e740ba4"]}
+{"question": "프론트 돌리려면 env에 뭐 넣어야 해?", "answer_page_ids": ["2b77455c17d08122a028e46084a81819"]}
+{"question": "동아리장 권한 어떻게 받냐고 물어보면 뭐라고 답해줘야 해?", "answer_page_ids": ["2f37455c17d0808fa964ed8447577324", "2f77455c17d080119251dcc2ebca8400", "2b77455c17d0804081a6e2289aa4b926"]}
+{"question": "모집글 올리려면 뭐부터 하라고 안내했더라?", "answer_page_ids": ["2b77455c17d0804081a6e2289aa4b926"]}
+{"question": "카카오 로그인 UI는 누가 맡았었어?", "answer_page_ids": ["3647455c17d0802aa7c4e5c5088c9e00"]}
+{"question": "flyway 도입한 사람이 누구야?", "answer_page_ids": ["39f7455c17d08094906efc5806588206"]}
+{"question": "총동연 관계자가 권한이 어떤게 있어?", "answer_page_ids": ["38f7455c17d0802c8ff9f40f0f14a02a", "38f7455c17d0806d8164c0c648258e3f", "3647455c17d0802aa7c4e5c5088c9e00", "2b77455c17d080a99710cd17cf0e0237"]}
+{"question": "presignedURL로 바꾼 거 프론트에 공유하라고 했던 회의가 언제야?", "answer_page_ids": ["39f7455c17d08094906efc5806588206"]}
+{"question": "이슈 생성 자동화는 누가 했지?", "answer_page_ids": ["39f7455c17d08094906efc5806588206", "3a27455c17d080c18e1cedeb54b15da7"]}
+{"question": "커넥션 풀 문서 어디 있어?", "answer_page_ids": ["3597455c17d08037befeea82b23d66fb", "3587455c17d08059be8dcb747c5ae7c4", "3507455c17d0802ba928e982eb69cb94"]}
+{"question": "인증이랑 인가 차이가 먼데?", "answer_page_ids": ["3347455c17d080a08956e08df6e31680", "33b7455c17d080238f15cb3c9be951b0", "33b7455c17d080d88145d41a1d8ed5e4"]}
+{"question": "특정 동아리 모집글 전부 가져오는 엔드포인트 주소가 뭐야?", "answer_page_ids": ["1cf7455c17d080c9902dd7814e299d54", "2dd7455c17d08034af89d5d70cc9cd9b"]}
+{"question": "창학 발표 때 나올 만한 질문 뽑아둔 거 있어?", "answer_page_ids": ["29a7455c17d0817f951ac632b95d21ce"]}
+{"question": "지도교수님 자문 계획 어디에 적었어?", "answer_page_ids": ["29a7455c17d081cba582d08964310afe"]}
+{"question": "AI로 급하게 짠 거 되돌린 내역 정리해둔 데 있어?", "answer_page_ids": ["3207455c17d080c698ceee7d34ca046f"]}
+{"question": "환불 문의할 때 보낸 메일 남아 있어?", "answer_page_ids": ["3687455c17d0807db3e1c34a627d11ac"]}
+{"question": "즐겨찾기 눌렀을 때 토스트 띄워달라는 피드백 있었지?", "answer_page_ids": ["2fc7455c17d0800d9b21fcc07b09f2f3", "2fc7455c17d0803a9709fbdba8d6af5e"]}
+{"question": "서버 죽었던 사건들 원인이 매번 뭐였는지 알려줘", "answer_page_ids": ["3007455c17d080e5a85ce589f94845a3", "3a67455c17d08026a184c2eefba76ca1", "2f27455c17d08011b5c5d7d73bc184ab"]}

@@ -1,7 +1,12 @@
-venv/
-venv.broken/
-__pycache__/
-*.pyc
 .env
-data/notion/
-storage/
+.venv/
+__pycache__/
+*.egg-info/
+qdrant_storage/
+.cache/
+sync_state.json
+logs/
+
+# 로컬 절대경로와 세션 UUID가 들어 있어 공유 가치가 없다
+.claude/
+props.txt

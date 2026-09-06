@@ -1,0 +1,37 @@
+{"question": "이미지 삭제를 프론트가 아니라 서버에서 하기로 한 근거가 뭐야?", "answer_page_ids": ["39d7455c17d0804e9a17cf54626ba23c"], "type": "이유", "note": "본문: 서버 주도 후처리 / 실패 감지·수습 구조"}
+{"question": "로고 이미지 줄일 때 최대 몇 픽셀로 잡았지?", "answer_page_ids": ["3b47455c17d08016a652c58b73f3fbc8"], "type": "사실", "note": "본문 스크립트: LOGO_MAX = (256, 256)"}
+{"question": "CI는 성공했는데 개발 서버에서 데이터가 안 왔던 적 있잖아, 원인이 뭐였어?", "answer_page_ids": ["3a67455c17d08026a184c2eefba76ca1"], "type": "사실", "note": "본문: yml 들여쓰기에 TAB이 들어가 컨테이너가 안 뜸"}
+{"question": "12월에 AWS 요금 갑자기 튄 이유가 뭐였어?", "answer_page_ids": ["3007455c17d0800cba13fa594727e9c8"], "type": "이유", "note": "본문: db.m7g.large 인스턴스가 3.4일 켜져 있었음"}
+{"question": "ddl-auto update 쓰다가 왜 바꾼 거야?", "answer_page_ids": ["3a27455c17d080f5834fc0166a6248bf"], "type": "이유", "note": "본문: 스프린트 4기 스키마 변경 잦음 → 마이그레이션 툴 도입"}
+{"question": "8080 포트를 전체 공개에서 막은 이유가 뭐지?", "answer_page_ids": ["3007455c17d0802eadd8c4bbba0efb8b"], "type": "이유", "note": "본문: 자동 스캐너/봇이 .env, wp-config.php 훑음. 제목은 '무한 404'"}
+{"question": "토큰 에러 로그 남기다가 서버 내려간 적 있지 않아?", "answer_page_ids": ["2f27455c17d08011b5c5d7d73bc184ab"], "type": "사실", "note": "본문: 순환 참조로 무한 재귀 → OOM"}
+{"question": "어드민에서 뒤로가기 누르면 페이지가 통째로 나가버리던 거 어떻게 고쳤어?", "answer_page_ids": ["3247455c17d0805caea8ed883d4eeefc"], "type": "이유", "note": "본문: step을 URL searchParams로 옮김. 제목은 '어드민 퍼널 개선'"}
+{"question": "운영 서버 보안그룹이 몇 개고 각각 뭐 하는 거야?", "answer_page_ids": ["3797455c17d080b3839de41ce4a35e50"], "type": "사실", "note": "본문: default / web-sg / db-sg 3개"}
+{"question": "모니터링을 dev랑 prod에서 다르게 구성한 이유가 뭐야?", "answer_page_ids": ["39d7455c17d080fba5a9e063e342185e"], "type": "이유", "note": "본문: Grafana Cloud Free는 14일 보관 제한 → dev만. 검수: prod 구축 문서와 겹칠 수 있음"}
+{"question": "운영 쪽 사진을 개발 쪽으로 복사하는 절차 정리된 거 있어?", "answer_page_ids": ["3007455c17d080ada4cdcff3e4ee7617"], "type": "위치", "note": "본문 첫 줄이 그 목적을 명시"}
+{"question": "카카오 로그인 붙일 때 앱 키를 어디서 받는 거였지?", "answer_page_ids": ["3007455c17d080c685f9fc878c0e77c0"], "type": "사실", "note": "본문: 카카오 developer에서 애플리케이션 생성"}
+{"question": "프리티어 끝나서 인스턴스가 종료됐던 적이 언제야?", "answer_page_ids": ["3007455c17d080e5a85ce589f94845a3", "3007455c17d0800cba13fa594727e9c8"], "type": "사실", "note": "같은 사건을 다룬 문서 2개. '개발 서버 다운'은 원인, '과금 원인 파악'은 재가동 후 비용까지 서술"}
+{"question": "테일윈드도 후보에 있었는데 왜 안 썼어?", "answer_page_ids": ["1987455c17d08004bb24dce1cca8ee2e"], "type": "이유", "note": "본문: 문법 학습 비용, className 가독성"}
+{"question": "우리 서비스 어느 브라우저 기준으로 만든 거야?", "answer_page_ids": ["1987455c17d0807a945ac38204bf9613"], "type": "사실", "note": "본문: PC 유저 / 크롬"}
+{"question": "프론트 캐싱 기술은 뭘로 하기로 했지?", "answer_page_ids": ["1987455c17d080658d8bd48e67f80f8f"], "type": "사실", "note": "제목에 'react query'가 있어 쉬운 편 — 난이도 낮으면 교체"}
+{"question": "백엔드 작업 브랜치는 어디에 먼저 머지해야 돼?", "answer_page_ids": ["29a7455c17d0813fbab4feced6a0d021", "29b7455c17d081deaf8cfb09c00afe0d"], "type": "사실", "note": "노션에 같은 문서가 온보딩 자료와 회의록 하위에 중복 존재. 둘 다 정답 처리"}
+{"question": "QueryDSL이 만드는 Q클래스는 어느 폴더에 생겨?", "answer_page_ids": ["29a7455c17d081d4a6dbe59f6cc104ba"], "type": "사실", "note": "본문: generated 폴더"}
+{"question": "프론트 fsd구조에서 widgets랑 views 차이가 뭐야?", "answer_page_ids": ["2b77455c17d08130bae7d9b2a66d205d"], "type": "사실", "note": "본문: FSD 레이어 설명. 제목은 '[규칙] 폴더 구조'"}
+{"question": "서버 쪽 커밋 메시지 앞에 붙이는 타입 종류가 뭐뭐 있어?", "answer_page_ids": ["1927455c17d0818c8effcfbd20a0eb1b", "29a7455c17d081688d70d17e86124b41", "29b7455c17d0818c88c0daec1e740ba4"], "type": "사실", "note": "Git Convention과 백엔드 온보딩 문서가 각각 타입 표를 갖고 있고 내용이 조금 다르다(Test/CI:CD 유무). 회의록 하위 복사본까지 3개"}
+{"question": "프론트 돌리려면 env에 뭐 넣어야 해?", "answer_page_ids": ["2b77455c17d08122a028e46084a81819"], "type": "위치", "note": "본문에 env 목록 그대로 있음"}
+{"question": "동아리장 권한 어떻게 받냐고 물어보면 뭐라고 답해줘야 해?", "answer_page_ids": ["2f37455c17d0808fa964ed8447577324", "2f77455c17d080119251dcc2ebca8400", "2b77455c17d0804081a6e2289aa4b926"], "type": "종합", "note": "1차/2차/2차(혜빈 ver) FAQ 모두 구글폼으로 권한 요청하라고 답한다"}
+{"question": "모집글 올리려면 뭐부터 하라고 안내했더라?", "answer_page_ids": ["2b77455c17d0804081a6e2289aa4b926"], "type": "사실", "note": "본문: 로그인 → 권한 요청 → 구글폼"}
+{"question": "카카오 로그인 UI는 누가 맡았었어?", "answer_page_ids": ["3647455c17d0802aa7c4e5c5088c9e00"], "type": "사실", "note": "7차 회의록 Web Done: 지우"}
+{"question": "flyway 도입한 사람이 누구야?", "answer_page_ids": ["39f7455c17d08094906efc5806588206"], "type": "사실", "note": "14차 회의록 Server Done: 석준"}
+{"question": "총동연 관계자가 권한이 어떤게 있어?", "answer_page_ids": ["38f7455c17d0802c8ff9f40f0f14a02a", "38f7455c17d0806d8164c0c648258e3f", "3647455c17d0802aa7c4e5c5088c9e00", "2b77455c17d080a99710cd17cf0e0237"], "type": "사실", "note": "질문이 승인 권한에서 권한 전반으로 넓어져 '사용자 권한 관련 설명' 추가"}
+{"question": "presignedURL로 바꾼 거 프론트에 공유하라고 했던 회의가 언제야?", "answer_page_ids": ["39f7455c17d08094906efc5806588206"], "type": "사실", "note": "14차 회의록 2026-07-21"}
+{"question": "이슈 생성 자동화는 누가 했지?", "answer_page_ids": ["39f7455c17d08094906efc5806588206", "3a27455c17d080c18e1cedeb54b15da7"], "type": "종합", "note": "검수 필요: 회의록(혜빈)과 '모꼬지 자동화 > 이슈 생성' 문서 둘 다 후보"}
+{"question": "커넥션 풀 문서 어디 있어?", "answer_page_ids": ["3597455c17d08037befeea82b23d66fb", "3587455c17d08059be8dcb747c5ae7c4", "3507455c17d0802ba928e982eb69cb94"], "type": "사실", "note": "작성자를 지정하지 않는 문구라 9차 문서화 세 명분을 모두 정답 처리"}
+{"question": "인증이랑 인가 차이가 먼데?", "answer_page_ids": ["3347455c17d080a08956e08df6e31680", "33b7455c17d080238f15cb3c9be951b0", "33b7455c17d080d88145d41a1d8ed5e4"], "type": "위치", "note": "7차 문서화도 세 명이 각자 작성. 인증/인가는 세 문서 모두 다룬다"}
+{"question": "특정 동아리 모집글 전부 가져오는 엔드포인트 주소가 뭐야?", "answer_page_ids": ["1cf7455c17d080c9902dd7814e299d54", "2dd7455c17d08034af89d5d70cc9cd9b"], "type": "사실", "note": "두 문서가 같은 API를 다른 경로로 적어 뒀다(/recruitments/club/{clubId} vs /api/local/recruitments/club/{clubId}). 문서 불일치라 둘 다 정답 처리"}
+{"question": "창학 발표 때 나올 만한 질문 뽑아둔 거 있어?", "answer_page_ids": ["29a7455c17d0817f951ac632b95d21ce"], "type": "위치", "note": "면접 예상질문 문서"}
+{"question": "지도교수님 자문 계획 어디에 적었어?", "answer_page_ids": ["29a7455c17d081cba582d08964310afe"], "type": "위치", "note": "창의학기제 - 하계, '8. 지도 교수 자문 계획'"}
+{"question": "AI로 급하게 짠 거 되돌린 내역 정리해둔 데 있어?", "answer_page_ids": ["3207455c17d080c698ceee7d34ca046f"], "type": "위치", "note": "롤백 및 건의내용. FSD 레이어 위반 수정 등"}
+{"question": "환불 문의할 때 보낸 메일 남아 있어?", "answer_page_ids": ["3687455c17d0807db3e1c34a627d11ac"], "type": "위치", "note": "환불 메일"}
+{"question": "즐겨찾기 눌렀을 때 토스트 띄워달라는 피드백 있었지?", "answer_page_ids": ["2fc7455c17d0800d9b21fcc07b09f2f3", "2fc7455c17d0803a9709fbdba8d6af5e"], "type": "종합", "note": "원래 라벨(UT 4차시·모바일 3차시)은 진행 대본만 있고 피드백이 없어 오답이었다. 실제 피드백은 '하수한 UT' 두 곳"}
+{"question": "서버 죽었던 사건들 원인이 매번 뭐였는지 알려줘", "answer_page_ids": ["3007455c17d080e5a85ce589f94845a3", "3a67455c17d08026a184c2eefba76ca1", "2f27455c17d08011b5c5d7d73bc184ab"], "type": "종합", "note": "여러 문서 종합. 가장 어려운 유형 — Recall@10으로 봐야 할 수 있음"}

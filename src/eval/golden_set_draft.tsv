@@ -1,0 +1,38 @@
+﻿번호	질문	유형	정답 문서	노션 링크	검수 메모
+1	이미지 삭제를 프론트가 아니라 서버에서 하기로 한 근거가 뭐야?	이유	S3 작업 위치 결정 기준	https://www.notion.so/39d7455c17d0804e9a17cf54626ba23c	본문: 서버 주도 후처리 / 실패 감지·수습 구조
+2	로고 이미지 줄일 때 최대 몇 픽셀로 잡았지?	사실	로고, 모집글 이미지 webp 로 변환하자! + 브라우저 캐싱	https://www.notion.so/3b47455c17d08016a652c58b73f3fbc8	본문 스크립트: LOGO_MAX = (256, 256)
+3	CI는 성공했는데 개발 서버에서 데이터가 안 왔던 적 있잖아, 원인이 뭐였어?	사실	모꼬지 개발 서버 헬스체크 실패 고치자!	https://www.notion.so/3a67455c17d08026a184c2eefba76ca1	본문: yml 들여쓰기에 TAB이 들어가 컨테이너가 안 뜸
+4	12월에 AWS 요금 갑자기 튄 이유가 뭐였어?	이유	개발 서버 과금 원인 파악 및 과금 문의	https://www.notion.so/3007455c17d0800cba13fa594727e9c8	본문: db.m7g.large 인스턴스가 3.4일 켜져 있었음
+5	ddl-auto update 쓰다가 왜 바꾼 거야?	이유	db 마이그레이션 툴 도입	https://www.notion.so/3a27455c17d080f5834fc0166a6248bf	본문: 스프린트 4기 스키마 변경 잦음 → 마이그레이션 툴 도입
+6	8080 포트를 전체 공개에서 막은 이유가 뭐지?	이유	무한 404 오류 해결 문서화 (해결 실패 후 병목 상태)	https://www.notion.so/3007455c17d0802eadd8c4bbba0efb8b	본문: 자동 스캐너/봇이 .env, wp-config.php 훑음. 제목은 '무한 404'
+7	토큰 에러 로그 남기다가 서버 내려간 적 있지 않아?	사실	서버 다운 이슈 원인 파악 및 해결 과정	https://www.notion.so/2f27455c17d08011b5c5d7d73bc184ab	본문: 순환 참조로 무한 재귀 → OOM
+8	어드민에서 뒤로가기 누르면 페이지가 통째로 나가버리던 거 어떻게 고쳤어?	이유	어드민 퍼널 개선	https://www.notion.so/3247455c17d0805caea8ed883d4eeefc	본문: step을 URL searchParams로 옮김. 제목은 '어드민 퍼널 개선'
+9	운영 서버 보안그룹이 몇 개고 각각 뭐 하는 거야?	사실	보안 그룹 설정 문서화	https://www.notion.so/3797455c17d080b3839de41ce4a35e50	본문: default / web-sg / db-sg 3개
+10	모니터링을 dev랑 prod에서 다르게 구성한 이유가 뭐야?	이유	dev 모니터링 서버 구축	https://www.notion.so/39d7455c17d080fba5a9e063e342185e	본문: Grafana Cloud Free는 14일 보관 제한 → dev만. 검수: prod 구축 문서와 겹칠 수 있음
+11	운영 쪽 사진을 개발 쪽으로 복사하는 절차 정리된 거 있어?	위치	S3 사진 넣기 문서화	https://www.notion.so/3007455c17d080ada4cdcff3e4ee7617	본문 첫 줄이 그 목적을 명시
+12	카카오 로그인 붙일 때 앱 키를 어디서 받는 거였지?	사실	카카오 로그인 문서화	https://www.notion.so/3007455c17d080c685f9fc878c0e77c0	본문: 카카오 developer에서 애플리케이션 생성
+13	프리티어 끝나서 인스턴스가 종료됐던 적이 언제야?	사실	개발 서버 다운 원인 파악 및 해결 문서화 / 개발 서버 과금 원인 파악 및 과금 문의	https://www.notion.so/3007455c17d080e5a85ce589f94845a3 https://www.notion.so/3007455c17d0800cba13fa594727e9c8	같은 사건을 다룬 문서 2개. '개발 서버 다운'은 원인, '과금 원인 파악'은 재가동 후 비용까지 서술
+14	테일윈드도 후보에 있었는데 왜 안 썼어?	이유	(css)styled component (1)	https://www.notion.so/1987455c17d08004bb24dce1cca8ee2e	본문: 문법 학습 비용, className 가독성
+15	우리 서비스 어느 브라우저 기준으로 만든 거야?	사실	서비스 타겟 환경 및 브라우저 선택 (1)	https://www.notion.so/1987455c17d0807a945ac38204bf9613	본문: PC 유저 / 크롬
+16	프론트 캐싱 기술은 뭘로 하기로 했지?	사실	(캐싱 및 api)react query (1)	https://www.notion.so/1987455c17d080658d8bd48e67f80f8f	제목에 'react query'가 있어 쉬운 편 — 난이도 낮으면 교체
+17	백엔드 작업 브랜치는 어디에 먼저 머지해야 돼?	사실	[규칙] 브랜치 전략 / [규칙] 브랜치 전략	https://www.notion.so/29a7455c17d0813fbab4feced6a0d021 https://www.notion.so/29b7455c17d081deaf8cfb09c00afe0d	노션에 같은 문서가 온보딩 자료와 회의록 하위에 중복 존재. 둘 다 정답 처리
+18	QueryDSL이 만드는 Q클래스는 어느 폴더에 생겨?	사실	[규칙] 코드 구조	https://www.notion.so/29a7455c17d081d4a6dbe59f6cc104ba	본문: generated 폴더
+19	프론트 fsd구조에서 widgets랑 views 차이가 뭐야?	사실	[규칙] 폴더 구조	https://www.notion.so/2b77455c17d08130bae7d9b2a66d205d	본문: FSD 레이어 설명. 제목은 '[규칙] 폴더 구조'
+20	서버 쪽 커밋 메시지 앞에 붙이는 타입 종류가 뭐뭐 있어?	사실	Git Convention / [규칙] 커밋 메세지 및 Pull Request / [규칙] 커밋 메세지 및 Pull Request	https://www.notion.so/1927455c17d0818c8effcfbd20a0eb1b https://www.notion.so/29a7455c17d081688d70d17e86124b41 https://www.notion.so/29b7455c17d0818c88c0daec1e740ba4	Git Convention과 백엔드 온보딩 문서가 각각 타입 표를 갖고 있고 내용이 조금 다르다(Test/CI:CD 유무). 회의록 하위 복사본까지 3개
+21	프론트 돌리려면 env에 뭐 넣어야 해?	위치	개발 세팅 정보	https://www.notion.so/2b77455c17d08122a028e46084a81819	본문에 env 목록 그대로 있음
+22	동아리장 권한 어떻게 받냐고 물어보면 뭐라고 답해줘야 해?	종합	2차 FAQ / 2차 FAQ (혜빈 ver) / 1차 FAQ	https://www.notion.so/2f37455c17d0808fa964ed8447577324 https://www.notion.so/2f77455c17d080119251dcc2ebca8400 https://www.notion.so/2b77455c17d0804081a6e2289aa4b926	1차/2차/2차(혜빈 ver) FAQ 모두 구글폼으로 권한 요청하라고 답한다
+23	모집글 올리려면 뭐부터 하라고 안내했더라?	사실	1차 FAQ	https://www.notion.so/2b77455c17d0804081a6e2289aa4b926	본문: 로그인 → 권한 요청 → 구글폼
+24	카카오 로그인 UI는 누가 맡았었어?	사실	7차 회의록	https://www.notion.so/3647455c17d0802aa7c4e5c5088c9e00	7차 회의록 Web Done: 지우
+25	flyway 도입한 사람이 누구야?	사실	14차 회의록	https://www.notion.so/39f7455c17d08094906efc5806588206	14차 회의록 Server Done: 석준
+26	총동연 관계자가 권한이 어떤게 있어?	사실	모꼬지 운영 매뉴얼 / 모꼬지 운영 매뉴얼 / 7차 회의록 / 사용자 권한 관련 설명	https://www.notion.so/38f7455c17d0802c8ff9f40f0f14a02a https://www.notion.so/38f7455c17d0806d8164c0c648258e3f https://www.notion.so/3647455c17d0802aa7c4e5c5088c9e00 https://www.notion.so/2b77455c17d080a99710cd17cf0e0237	질문이 승인 권한에서 권한 전반으로 넓어져 '사용자 권한 관련 설명' 추가
+27	presignedURL로 바꾼 거 프론트에 공유하라고 했던 회의가 언제야?	사실	14차 회의록	https://www.notion.so/39f7455c17d08094906efc5806588206	14차 회의록 2026-07-21
+28	이슈 생성 자동화는 누가 했지?	종합	14차 회의록 / 이슈 생성	https://www.notion.so/39f7455c17d08094906efc5806588206 https://www.notion.so/3a27455c17d080c18e1cedeb54b15da7	검수 필요: 회의록(혜빈)과 '모꼬지 자동화 > 이슈 생성' 문서 둘 다 후보
+29	커넥션 풀 문서 어디 있어?	사실	9차 문서화(데이터베이스, 커넥션 풀, HikariCP) / 9차 문서화(**데이터베이스 커넥션 풀 (Connection Pool)과 HikariCP**) / 9차 문서화(커넥션풀, HikariCP)	https://www.notion.so/3597455c17d08037befeea82b23d66fb https://www.notion.so/3587455c17d08059be8dcb747c5ae7c4 https://www.notion.so/3507455c17d0802ba928e982eb69cb94	작성자를 지정하지 않는 문구라 9차 문서화 세 명분을 모두 정답 처리
+30	인증이랑 인가 차이가 먼데?	위치	7차 문서화(쿠키, 세션, jwt) / 7차 문서화(쿠키, 세션, jwt) / 7차 문서화(쿠키, 세션, jwt)	https://www.notion.so/3347455c17d080a08956e08df6e31680 https://www.notion.so/33b7455c17d080238f15cb3c9be951b0 https://www.notion.so/33b7455c17d080d88145d41a1d8ed5e4	7차 문서화도 세 명이 각자 작성. 인증/인가는 세 문서 모두 다룬다
+31	특정 동아리 모집글 전부 가져오는 엔드포인트 주소가 뭐야?	사실	동아리 모집글 전체 조회 API / 모집 관련 api 문서화	https://www.notion.so/1cf7455c17d080c9902dd7814e299d54 https://www.notion.so/2dd7455c17d08034af89d5d70cc9cd9b	두 문서가 같은 API를 다른 경로로 적어 뒀다(/recruitments/club/{clubId} vs /api/local/recruitments/club/{clubId}). 문서 불일치라 둘 다 정답 처리
+32	창학 발표 때 나올 만한 질문 뽑아둔 거 있어?	위치	면접 예상질문	https://www.notion.so/29a7455c17d0817f951ac632b95d21ce	면접 예상질문 문서
+33	지도교수님 자문 계획 어디에 적었어?	위치	창의학기제 - 하계	https://www.notion.so/29a7455c17d081cba582d08964310afe	창의학기제 - 하계, '8. 지도 교수 자문 계획'
+34	AI로 급하게 짠 거 되돌린 내역 정리해둔 데 있어?	위치	롤백 및 건의내용	https://www.notion.so/3207455c17d080c698ceee7d34ca046f	롤백 및 건의내용. FSD 레이어 위반 수정 등
+35	환불 문의할 때 보낸 메일 남아 있어?	위치	환불 메일	https://www.notion.so/3687455c17d0807db3e1c34a627d11ac	환불 메일
+36	즐겨찾기 눌렀을 때 토스트 띄워달라는 피드백 있었지?	종합	하수한 UT / 하수한 UT	https://www.notion.so/2fc7455c17d0800d9b21fcc07b09f2f3 https://www.notion.so/2fc7455c17d0803a9709fbdba8d6af5e	원래 라벨(UT 4차시·모바일 3차시)은 진행 대본만 있고 피드백이 없어 오답이었다. 실제 피드백은 '하수한 UT' 두 곳
+37	서버 죽었던 사건들 원인이 매번 뭐였는지 알려줘	종합	개발 서버 다운 원인 파악 및 해결 문서화 / 모꼬지 개발 서버 헬스체크 실패 고치자! / 서버 다운 이슈 원인 파악 및 해결 과정	https://www.notion.so/3007455c17d080e5a85ce589f94845a3 https://www.notion.so/3a67455c17d08026a184c2eefba76ca1 https://www.notion.so/2f27455c17d08011b5c5d7d73bc184ab	여러 문서 종합. 가장 어려운 유형 — Recall@10으로 봐야 할 수 있음

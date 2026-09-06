@@ -1,0 +1,10 @@
+{"query": "Redis 관련 문서화 어디 있어?", "expect": "Redis"}
+{"query": "Nginx 설정 정리한 거 있어?", "expect": "Nginx"}
+{"query": "JPA 문서화 보여줘", "expect": "JPA"}
+{"query": "쿠키랑 세션, JWT 정리한 문서", "expect": "jwt"}
+{"query": "Docker 관련 자료", "expect": "Docker"}
+{"query": "운영 서버 마이그레이션 어떻게 했어?", "expect": "마이그레이션"}
+{"query": "모니터링 서버 어떻게 구성했어?", "expect": "모니터링"}
+{"query": "회의록 어디서 봐?", "expect": "회의록"}
+{"query": "모꼬지 기술 스택이 뭐야?", "expect": "스택"}
+{"query": "성능 개선하려고 뭐 했어?", "expect": "성능"}
