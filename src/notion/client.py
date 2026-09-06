@@ -242,8 +242,8 @@ class NotionCollector:
         else:
             blocks = self.fetch_block_tree(page["id"])
             body = blocks_to_markdown(blocks)
-            properties = self._render_properties(page)
-            markdown = f"{properties}\n\n{body}".strip() if properties else body
+            rendered = self._render_properties(page)
+            markdown = f"{rendered}\n\n{body}".strip() if rendered else body
             child_page_ids, child_database_ids = self.collect_child_refs(blocks)
             self._cache[normalized] = {
                 "last_edited_time": last_edited_time,
