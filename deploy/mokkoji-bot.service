@@ -1,0 +1,15 @@
+[Unit]
+Description=Mokkoji RAG Discord bot
+After=network-online.target docker.service ollama.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=__RUN_USER__
+WorkingDirectory=__PROJECT_DIR__
+ExecStart=__VENV_PYTHON__ -m src.bot.discord_bot
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

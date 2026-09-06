@@ -1,0 +1,10 @@
+[Unit]
+Description=Mokkoji RAG weekly Notion sync
+After=network-online.target docker.service ollama.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=__RUN_USER__
+WorkingDirectory=__PROJECT_DIR__
+ExecStart=__VENV_PYTHON__ -m scripts.sync

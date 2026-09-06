@@ -1,0 +1,9 @@
+[Unit]
+Description=Run Mokkoji RAG sync every Tuesday 04:00 KST
+
+[Timer]
+OnCalendar=Tue *-*-* 04:00:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target
