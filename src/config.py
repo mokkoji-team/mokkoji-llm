@@ -16,10 +16,15 @@ NOTION_ROOT_PAGE_ID = os.getenv("NOTION_ROOT_PAGE_ID", "1837455c17d080358725cd5e
 QDRANT_URL = os.getenv("QDRANT_URL", "http://localhost:6333")
 QDRANT_COLLECTION = os.getenv("QDRANT_COLLECTION", "mokkoji_docs")
 
-# 디코더(LLM). 프로바이더는 ollama / anthropic / openai.
+# 디코더(LLM). 프로바이더는 ollama / anthropic / openai / google_genai.
 LLM_PROVIDER = os.getenv("LLM_PROVIDER", "ollama")
 LLM_MODEL = os.getenv("LLM_MODEL", "exaone3.5:2.4b")
 OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://localhost:11434")
+
+# 주 디코더가 쿼터를 넘기거나 장애일 때 대신 쓸 디코더. 비우면 폴백하지 않는다.
+# API를 주 경로로 두고 로컬 모델을 안전망으로 두는 구성을 위한 것이다.
+FALLBACK_LLM_PROVIDER = os.getenv("FALLBACK_LLM_PROVIDER", "")
+FALLBACK_LLM_MODEL = os.getenv("FALLBACK_LLM_MODEL", "")
 
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN", "")
 DISCORD_GUILD_ID = os.getenv("DISCORD_GUILD_ID", "")

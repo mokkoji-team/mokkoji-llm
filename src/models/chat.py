@@ -2,9 +2,13 @@
 
 `.env`의 LLM_PROVIDER / LLM_MODEL만 바꾸면 모델이 교체된다.
 
-    LLM_PROVIDER=ollama     LLM_MODEL=qwen3:4b
-    LLM_PROVIDER=anthropic  LLM_MODEL=claude-opus-5      ANTHROPIC_API_KEY 필요
-    LLM_PROVIDER=openai     LLM_MODEL=gpt-4.1-mini       OPENAI_API_KEY 필요
+    LLM_PROVIDER=ollama       LLM_MODEL=qwen3:4b
+    LLM_PROVIDER=anthropic    LLM_MODEL=claude-opus-5      ANTHROPIC_API_KEY 필요
+    LLM_PROVIDER=openai       LLM_MODEL=gpt-4.1-mini       OPENAI_API_KEY 필요
+    LLM_PROVIDER=google_genai LLM_MODEL=gemini-2.5-flash   GOOGLE_API_KEY 필요
+
+FALLBACK_LLM_PROVIDER / FALLBACK_LLM_MODEL을 채우면 주 디코더가 쿼터를 넘기거나
+장애일 때 그쪽으로 넘어간다. 판단 기준은 src.generation.llm에 있다.
 
 ollama 외의 프로바이더는 패키지를 따로 깔아야 한다(`langchain-anthropic` 등).
 init_chat_model이 없는 패키지를 알려주므로 미리 다 깔아둘 필요는 없다.
@@ -45,13 +49,13 @@ def _provider_options(provider: str, model: str) -> dict:
         # Claude Opus 5 계열은 temperature를 받지 않는다(400). 상한만 넘긴다.
         return {"max_tokens": MAX_OUTPUT_TOKENS}
 
+    if provider == "google_genai":
+        return {"max_output_tokens": MAX_OUTPUT_TOKENS, "temperature": 0.2}
+
     return {"max_tokens": MAX_OUTPUT_TOKENS, "temperature": 0.2}
 
 
-@lru_cache(maxsize=1)
-def get_chat_model() -> BaseChatModel:
-    provider = config.LLM_PROVIDER
-    model = config.LLM_MODEL
+def _build(provider: str, model: str) -> BaseChatModel:
     return init_chat_model(
         model,
         model_provider=provider,
@@ -59,5 +63,20 @@ def get_chat_model() -> BaseChatModel:
     )
 
 
+@lru_cache(maxsize=1)
+def get_chat_model() -> BaseChatModel:
+    return _build(config.LLM_PROVIDER, config.LLM_MODEL)
+
+
+@lru_cache(maxsize=1)
+def get_fallback_chat_model() -> BaseChatModel | None:
+    if not config.FALLBACK_LLM_PROVIDER:
+        return None
+    return _build(config.FALLBACK_LLM_PROVIDER, config.FALLBACK_LLM_MODEL)
+
+
 def describe() -> str:
-    return f"{config.LLM_PROVIDER}:{config.LLM_MODEL}"
+    primary = f"{config.LLM_PROVIDER}:{config.LLM_MODEL}"
+    if not config.FALLBACK_LLM_PROVIDER:
+        return primary
+    return f"{primary} (폴백 {config.FALLBACK_LLM_PROVIDER}:{config.FALLBACK_LLM_MODEL})"

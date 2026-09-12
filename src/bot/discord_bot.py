@@ -21,6 +21,9 @@ EDIT_INTERVAL_SECONDS = 1.5
 MESSAGE_LIMIT = 1900
 SOURCE_LIMIT = 4
 
+# 폴백은 로컬 CPU 추론이라 답변까지 몇 분이 걸린다. 알리지 않으면 봇이 멈춘 것으로 보인다.
+FALLBACK_NOTICE = "⚠️ 로컬 모델로 생성 중입니다. 평소보다 오래 걸립니다."
+
 # CPU 추론은 병렬로 돌리면 전부 느려진다. 한 번에 하나씩 처리한다.
 _inference_lock = asyncio.Lock()
 
@@ -97,24 +100,32 @@ async def _handle_question(interaction: discord.Interaction, question: str) -> N
     await interaction.edit_original_response(content="✍️ 답변 생성 중…")
     messages = prompt.build_messages(question, results)
 
-    state = {"text": "", "done": False}
+    state = {"text": "", "done": False, "fallback": False}
+
+    def mark_fallback() -> None:
+        state["fallback"] = True
 
     def consume_stream() -> None:
         try:
-            for piece in llm.stream_answer(messages):
+            for piece in llm.stream_answer(messages, on_fallback=mark_fallback):
                 state["text"] += piece
         finally:
             state["done"] = True
 
     generation = asyncio.create_task(asyncio.to_thread(consume_stream))
 
-    rendered = ""
+    rendered = None
     while not state["done"]:
         await asyncio.sleep(EDIT_INTERVAL_SECONDS)
-        current = state["text"]
-        if current and current != rendered:
-            rendered = current
-            await interaction.edit_original_response(content=_format(question, current, streaming=True))
+        # 폴백 직후에는 본문이 아직 비어 있다. 그 사이를 빈 화면으로 두지 않으려면
+        # 텍스트가 없을 때도 안내만 먼저 갱신해야 한다.
+        current = (state["fallback"], state["text"])
+        if current == rendered:
+            continue
+        rendered = current
+        await interaction.edit_original_response(
+            content=_format(question, state["text"], streaming=True, fallback=state["fallback"])
+        )
 
     await generation
 
@@ -125,8 +136,10 @@ async def _handle_question(interaction: discord.Interaction, question: str) -> N
     )
 
 
-def _format(question: str, answer: str, streaming: bool) -> str:
+def _format(question: str, answer: str, streaming: bool, fallback: bool = False) -> str:
     header = f"> {question}\n\n"
+    if fallback:
+        header += f"{FALLBACK_NOTICE}\n\n"
     suffix = " ▌" if streaming else ""
     budget = max(200, MESSAGE_LIMIT - len(header) - len(suffix))
     body = answer if len(answer) <= budget else answer[:budget] + "…"

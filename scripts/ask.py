@@ -36,6 +36,7 @@ class Timing:
     prompt_characters: int = 0
     context_chunks: int = 0
     streamed_pieces: int = 0
+    fallback: bool = False
     # Ollama가 응답에 실어 보내는 실측치. 다른 프로바이더는 비어 있다.
     server: dict = field(default_factory=dict)
 
@@ -119,7 +120,11 @@ def generate(messages: list[dict], timing: Timing) -> str:
     started = time.monotonic()
     answer = ""
 
-    for chunk in llm.stream_chunks(messages):
+    def note_fallback() -> None:
+        timing.fallback = True
+        print("\n(주 디코더 실패 — 폴백으로 생성한다)\n")
+
+    for chunk in llm.stream_chunks(messages, on_fallback=note_fallback):
         timing.server.update(chunk.response_metadata)
         piece = str(chunk.text)
         if not piece:
