@@ -5,7 +5,7 @@
     LLM_PROVIDER=ollama       LLM_MODEL=qwen3:4b
     LLM_PROVIDER=anthropic    LLM_MODEL=claude-opus-5      ANTHROPIC_API_KEY 필요
     LLM_PROVIDER=openai       LLM_MODEL=gpt-4.1-mini       OPENAI_API_KEY 필요
-    LLM_PROVIDER=google_genai LLM_MODEL=gemini-2.5-flash   GOOGLE_API_KEY 필요
+    LLM_PROVIDER=google_genai LLM_MODEL=gemini-3.6-flash   GOOGLE_API_KEY 필요
 
 FALLBACK_LLM_PROVIDER / FALLBACK_LLM_MODEL을 채우면 주 디코더가 쿼터를 넘기거나
 장애일 때 그쪽으로 넘어간다. 판단 기준은 src.generation.llm에 있다.
