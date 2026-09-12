@@ -21,8 +21,13 @@ from langchain_core.language_models import BaseChatModel
 
 from src import config
 
-# CPU 추론이라 답변이 길어지면 UX가 무너진다. 토큰 상한을 걸어둔다.
-MAX_OUTPUT_TOKENS = 400
+# CPU 추론은 decode가 3.9 tok/s라 400토큰이 100초다. 이보다 늘리면 UX가 무너진다.
+LOCAL_MAX_OUTPUT_TOKENS = 400
+
+# API는 그 제약이 없다. 오히려 상한이 작으면 사고 토큰을 쓰는 모델이
+# 그걸로 상한을 다 먹고 본문을 못 낸다 — gemini-3.6-flash가 400에서 2토큰만 냈다.
+# 과금은 실제 생성분에만 붙으므로 상한을 크게 두어도 비용이 늘지 않는다.
+API_MAX_OUTPUT_TOKENS = 8192
 
 # 모델을 메모리에 상주시켜 콜드스타트를 없앤다. ollama 전용.
 KEEP_ALIVE = "30m"
@@ -37,7 +42,7 @@ def _provider_options(provider: str, model: str) -> dict:
         options = {
             "base_url": config.OLLAMA_HOST,
             "num_ctx": 8192,
-            "num_predict": MAX_OUTPUT_TOKENS,
+            "num_predict": LOCAL_MAX_OUTPUT_TOKENS,
             "temperature": 0.2,
             "keep_alive": KEEP_ALIVE,
         }
@@ -47,12 +52,14 @@ def _provider_options(provider: str, model: str) -> dict:
 
     if provider == "anthropic":
         # Claude Opus 5 계열은 temperature를 받지 않는다(400). 상한만 넘긴다.
-        return {"max_tokens": MAX_OUTPUT_TOKENS}
+        return {"max_tokens": API_MAX_OUTPUT_TOKENS}
 
     if provider == "google_genai":
-        return {"max_output_tokens": MAX_OUTPUT_TOKENS, "temperature": 0.2}
+        # gemini-3.x는 샘플링 파라미터를 고정값으로 쓴다. temperature를 보내면
+        # 경고만 뜨고 무시되므로, 실제로 하는 일만 남긴다.
+        return {"max_output_tokens": API_MAX_OUTPUT_TOKENS}
 
-    return {"max_tokens": MAX_OUTPUT_TOKENS, "temperature": 0.2}
+    return {"max_tokens": API_MAX_OUTPUT_TOKENS, "temperature": 0.2}
 
 
 def _build(provider: str, model: str) -> BaseChatModel:
