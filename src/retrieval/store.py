@@ -150,6 +150,43 @@ def indexed_page_versions() -> dict[str, str]:
             return versions
 
 
+def scroll_chunks(doc_type: str, start_date: str, end_date: str) -> list[dict]:
+    """기간에 걸린 청크를 본문까지 전부 가져온다.
+
+    날짜는 벡터에 안 들어가서 "저번주 회의"를 유사도로는 찾지 못한다.
+    실측해 보니 2월 회의록이 7위로 올라왔다. 조건 조회로 가야 한다.
+
+    doc_date는 KEYWORD라 범위 비교를 Qdrant에 맡길 수 없다. 파이썬에서 걸러낸다.
+    """
+    scroll_filter = models.Filter(
+        must=[models.FieldCondition(key=DOC_TYPE_FIELD, match=models.MatchValue(value=doc_type))]
+    )
+
+    client = get_client()
+    chunks: list[dict] = []
+    offset = None
+    while True:
+        points, offset = client.scroll(
+            collection_name=config.QDRANT_COLLECTION,
+            scroll_filter=scroll_filter,
+            limit=1000,
+            offset=offset,
+            with_payload=True,
+            with_vectors=False,
+        )
+        for point in points:
+            metadata = point.payload.get(METADATA_KEY, {})
+            doc_date = metadata.get("doc_date", "")
+            if not doc_date or not start_date <= doc_date <= end_date:
+                continue
+            chunks.append({"text": point.payload.get(CONTENT_KEY, ""), "metadata": metadata})
+        if offset is None:
+            break
+
+    chunks.sort(key=lambda chunk: (chunk["metadata"].get("doc_date", ""), chunk["metadata"].get("page_id", "")))
+    return chunks
+
+
 def scroll_pages(doc_type: str = "", with_date_only: bool = False) -> list[dict]:
     """조건에 맞는 페이지를 유사도 검색 없이 전부 가져온다.
 

@@ -8,16 +8,26 @@ LLM을 거치지 않으므로 응답이 1초 안에 끝나고, 없는 회의를 
 
 import calendar
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import date, timedelta
 
 from src import config
 from src.retrieval import store
+from src.retrieval.search import SearchResult
 
 NEWLINE = chr(10)
 
 # 이 말이 들어가면 "설명"이 아니라 "나열"을 원하는 질문으로 본다.
 LIST_SIGNALS = ("목록", "리스트", "뭐뭐", "몇 개", "몇개", "몇 건", "몇건", "나열", "전부", "다 보여", "다 알려")
+
+# 이 말과 기간이 함께 나오면 날짜로 좀혀 문서를 통째로 넘긴다.
+# "2월 회의록에서 API 스펙 뭔로 정했어" 같은 구체적인 질문까지 가로채면
+# 유사도 검색이 더 잘하는 일까지 빼앗게 된다.
+SUMMARY_SIGNALS = ("요약", "정리", "뭔 했", "뭔했", "무슨 일", "무슨 얘기", "어떤 얘기", "무슨 논의", "어떤 논의", "리캡")
+
+# 프롬프트 상한. 넘으면 요약하지 않고 목록을 돌려준다.
+# 잘라서 요약하면 빠진 문서가 생기는데 물어본 사람은 그걸 알 수가 없다.
+SUMMARY_CHARACTER_LIMIT = 40000
 
 # 질문에 이 말이 들어가면 해당 문서 유형으로 좁힌다.
 DOC_TYPE_HINTS = {
@@ -103,6 +113,11 @@ def is_list_query(question: str) -> bool:
     return any(signal.replace(" ", "") in text for signal in LIST_SIGNALS)
 
 
+def is_summary_query(question: str) -> bool:
+    text = question.replace(" ", "")
+    return any(signal.replace(" ", "") in text for signal in SUMMARY_SIGNALS)
+
+
 def answer(question: str, today: date | None = None) -> str | None:
     """열거형 질의면 완성된 답변 문자열을, 아니면 None을 돌려준다.
 
@@ -116,6 +131,11 @@ def answer(question: str, today: date | None = None) -> str | None:
     if not doc_type and not period:
         return None
 
+    return render_pages(doc_type, period)
+
+
+def render_pages(doc_type: str, period: Period | None) -> str:
+    """조건에 맞는 페이지를 링크 목록으로 렌더한다."""
     pages = store.scroll_pages(doc_type=doc_type)
 
     if period:
@@ -135,3 +155,65 @@ def answer(question: str, today: date | None = None) -> str | None:
         where = f" — {parent}" if parent else ""
         lines.append(f"- [{page['title']}]({page['url']}){stamp}{where}")
     return NEWLINE.join(lines)
+
+
+@dataclass
+class Resolution:
+    """유사도 검색 없이 처리한 결과.
+
+    message가 차 있으면 그대로 답하고 LLM을 부르지 않는다.
+    results가 차 있으면 그 발췌로 LLM을 돌린다.
+    """
+
+    message: str = ""
+    results: list[SearchResult] = field(default_factory=list)
+
+
+def _to_result(chunk: dict) -> SearchResult:
+    metadata = chunk["metadata"]
+    breadcrumb = " > ".join([*metadata.get("ancestor_path", []), metadata.get("page_title", "")])
+    return SearchResult(
+        text=chunk["text"],
+        page_id=metadata.get("page_id", ""),
+        page_title=metadata.get("page_title", ""),
+        breadcrumb=breadcrumb,
+        url=metadata.get("url", ""),
+        heading_path=metadata.get("heading_path", []),
+        # 조건 조회라 유사도 점수가 없다. RRF 점수와 섞이지 않도록 0으로 둔다.
+        score=0.0,
+        person=metadata.get("person", ""),
+        bucket=metadata.get("bucket", ""),
+    )
+
+
+def resolve(question: str, today: date | None = None) -> Resolution | None:
+    """유사도 검색을 타기 전에 조건 조회로 끝낼 수 있는지 본다.
+
+    None이면 호출한 쪽이 평소대로 하이브리드 검색을 한다.
+    """
+    listed = answer(question, today)
+    if listed:
+        return Resolution(message=listed)
+
+    if not is_summary_query(question):
+        return None
+
+    period = extract_period(question, today)
+    doc_type = extract_doc_type(question)
+    if not period or not doc_type:
+        return None
+
+    chunks = store.scroll_chunks(doc_type, period.start.isoformat(), period.end.isoformat())
+    if not chunks:
+        return Resolution(message=f"{period.label} {doc_type}을 찾지 못했습니다.")
+
+    total = sum(len(chunk["text"]) for chunk in chunks)
+    if total > SUMMARY_CHARACTER_LIMIT:
+        pages = len({chunk["metadata"].get("page_id") for chunk in chunks})
+        notice = (
+            f"{period.label} {doc_type}이 {pages}건이라 한 번에 요약하기에는 양이 많습니다. "
+            "기간을 좁혀서 다시 물어봐 주세요."
+        )
+        return Resolution(message=notice + NEWLINE + NEWLINE + render_pages(doc_type, period))
+
+    return Resolution(results=[_to_result(chunk) for chunk in chunks])

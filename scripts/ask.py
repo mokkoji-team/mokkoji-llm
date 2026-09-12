@@ -141,14 +141,18 @@ def generate(messages: list[dict], timing: Timing) -> str:
 
 
 def ask(question: str, retrieval_only: bool, verbose: bool, detailed_timing: bool) -> None:
-    # "저번달 회의 목록" 류는 유사도 상위 k개가 아니라 조건에 맞는 전부가 필요하다.
-    listed = listing.answer(question)
-    if listed and not retrieval_only:
-        print(listed)
+    # "저번달 회의 목록"과 "저번주 회의 요약"은 유사도가 아니라 조건 조회다.
+    resolution = listing.resolve(question)
+    if resolution and resolution.message and not retrieval_only:
+        print(resolution.message)
         return
 
     timing = Timing()
-    results = retrieve(question, timing)
+    if resolution and resolution.results:
+        results = resolution.results
+        print(f"\n(날짜 조회로 {len(results)}청크 — 유사도 검색을 건너뛰었다)")
+    else:
+        results = retrieve(question, timing)
 
     if not results:
         print(prompt.NO_RESULT_MESSAGE)

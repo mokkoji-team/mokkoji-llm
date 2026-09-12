@@ -85,13 +85,19 @@ async def ask_documents(interaction: discord.Interaction, 질문: str) -> None:
 async def _handle_question(interaction: discord.Interaction, question: str) -> None:
     await interaction.edit_original_response(content="🔍 문서 검색 중…")
 
-    # "저번달 회의 목록" 류는 조건 조회다. LLM을 거치지 않아 1초 안에 끝나고 누락도 없다.
-    listed = await asyncio.to_thread(listing.answer, question)
-    if listed:
-        await interaction.edit_original_response(content=_format(question, listed, streaming=False))
+    # "저번달 회의 목록"과 "저번주 회의 요약"은 유사도가 아니라 조건 조회다.
+    # 날짜는 벡터에 없어서 유사도로는 원리적으로 못 찾는다.
+    resolution = await asyncio.to_thread(listing.resolve, question)
+    if resolution and resolution.message:
+        await interaction.edit_original_response(
+            content=_format(question, resolution.message, streaming=False)
+        )
         return
 
-    results = await asyncio.to_thread(search.search, question)
+    if resolution and resolution.results:
+        results = resolution.results
+    else:
+        results = await asyncio.to_thread(search.search, question)
 
     if not results:
         await interaction.edit_original_response(content=prompt.NO_RESULT_MESSAGE)
